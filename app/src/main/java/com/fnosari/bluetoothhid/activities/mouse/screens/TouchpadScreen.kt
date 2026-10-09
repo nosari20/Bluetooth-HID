@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -93,6 +94,11 @@ fun TouchpadScreen(onBack: () -> Unit) {
         }
     }
 
+    // never leave a button held on the host when the screen goes away
+    DisposableEffect(service) {
+        onDispose { service?.setMouseButtons(0) }
+    }
+
     BasicLayoutWithTopBar(title = stringResource(R.string.mouse_activity_name), leftAction = onBack) {
         Column(Modifier.fillMaxSize()) {
             ConnectionBanner(state)
@@ -144,11 +150,14 @@ private fun HoldButton(label: String, modifier: Modifier, onChange: (Boolean) ->
                     awaitFirstDown()
                     pressed = true
                     onChange(true)
-                    do {
-                        val event = awaitPointerEvent()
-                    } while (event.changes.any { it.pressed })
-                    pressed = false
-                    onChange(false)
+                    try {
+                        do {
+                            val event = awaitPointerEvent()
+                        } while (event.changes.any { it.pressed })
+                    } finally {
+                        pressed = false
+                        onChange(false)
+                    }
                 }
             }
     ) {

@@ -119,4 +119,32 @@ class HIDReportQueueTest {
         assertEquals(HIDReport.Keyboard.RELEASE, sent.last())
         assertTrue(!q.isBusy)
     }
+
+    @Test
+    fun failJobsReportsFailedWithSentCount() {
+        lateinit var q: HIDReportQueue
+        q = HIDReportQueue({
+            sent += it
+            if (sent.size == 7) q.failJobs()   // host disconnected after 7 reports
+            true
+        }, delayMs = 0).also { queue = it }
+        q.start()
+        val rec = Recorder()
+        val second = Recorder()
+        q.submitJob(keys(2000), rec)
+        q.submitJob(keys(3), second)
+        assertEquals(JobResult.Failed(7), rec.await())
+        assertEquals(JobResult.Cancelled, second.await())
+    }
+
+    @Test
+    fun jobsAfterStopAreCancelledImmediately() {
+        val q = HIDReportQueue({ sent += it; true }, delayMs = 0)
+        q.start()
+        q.stop()
+        val rec = Recorder()
+        q.submitJob(keys(3), rec)
+        assertEquals(JobResult.Cancelled, rec.await())
+        assertTrue(sent.isEmpty())
+    }
 }

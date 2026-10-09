@@ -50,7 +50,12 @@ fun KeyboardScreen(onBack: () -> Unit) {
     val focus = remember { FocusRequester() }
     LaunchedEffect(Unit) { focus.requestFocus() }
 
+    // live text mirrors the host: start from empty on each (re)connection
+    val connected = state is HIDState.Connected
+    LaunchedEffect(connected) { if (live) text = "" }
+
     fun onTextChange(new: String) {
+        if (live && (service == null || !connected)) return   // nothing would reach the host
         if (live && service != null) {
             val edit = TextDiff.diff(text, new)
             val stroke = if (sticky != 0 && edit.deleteCount == 0 && edit.insert.length == 1) {

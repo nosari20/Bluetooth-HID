@@ -41,6 +41,8 @@ class HIDReportQueue(private val sender: ReportSender, @Volatile var delayMs: Lo
     private val pointer = ArrayDeque<HIDReport>()
     private val jobs = ArrayDeque<Job>()
     private var cancelRequested = false
+    private var failRequested = false
+    private var stopped = false
     private var running = false
     private var thread: Thread? = null
 
@@ -57,6 +59,7 @@ class HIDReportQueue(private val sender: ReportSender, @Volatile var delayMs: Lo
     fun stop() {
         synchronized(lock) {
             running = false
+            stopped = true
             lock.notifyAll()
         }
         thread?.join(1000)
@@ -92,8 +95,20 @@ class HIDReportQueue(private val sender: ReportSender, @Volatile var delayMs: Lo
             listener?.onFinished(JobResult.Completed)
             return
         }
+        val accepted = synchronized(lock) {
+            if (!stopped) {
+                jobs.addLast(Job(reports, listener))
+                lock.notifyAll()
+            }
+            !stopped
+        }
+        if (!accepted) listener?.onFinished(JobResult.Cancelled)
+    }
+
+    /** Ends queued jobs as if the link failed: head job gets [JobResult.Failed]. */
+    fun failJobs() {
         synchronized(lock) {
-            jobs.addLast(Job(reports, listener))
+            if (jobs.isNotEmpty()) failRequested = true
             lock.notifyAll()
         }
     }
@@ -110,14 +125,17 @@ class HIDReportQueue(private val sender: ReportSender, @Volatile var delayMs: Lo
             var report: HIDReport? = null
             var job: Job? = null
             var cancelled: List<Job> = emptyList()
+            var failed = false
 
             synchronized(lock) {
                 while (running && pointer.isEmpty() && jobs.isEmpty()) lock.wait()
                 if (!running) return
-                if (cancelRequested) {
+                if (cancelRequested || failRequested) {
+                    failed = failRequested
                     cancelled = jobs.toList()
                     jobs.clear()
                     cancelRequested = false
+                    failRequested = false
                 } else if (pointer.isNotEmpty()) {
                     report = pointer.removeFirst()
                 } else {
@@ -128,7 +146,9 @@ class HIDReportQueue(private val sender: ReportSender, @Volatile var delayMs: Lo
 
             if (cancelled.isNotEmpty()) {
                 sendWithRetry(HIDReport.Keyboard.RELEASE)
-                cancelled.forEach { it.listener?.onFinished(JobResult.Cancelled) }
+                cancelled.forEachIndexed { i, j ->
+                    j.listener?.onFinished(if (failed && i == 0) JobResult.Failed(j.index) else JobResult.Cancelled)
+                }
                 continue
             }
 

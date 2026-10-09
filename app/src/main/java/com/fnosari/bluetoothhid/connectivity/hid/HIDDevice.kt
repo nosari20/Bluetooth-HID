@@ -57,6 +57,9 @@ class HIDDevice(private val context: Context, private val callBack: HIDDeviceCal
     private var hid: BluetoothHidDevice? = null
 
     @Volatile
+    private var closed = true
+
+    @Volatile
     var connectedDevice: BluetoothDevice? = null
         private set
 
@@ -100,6 +103,11 @@ class HIDDevice(private val context: Context, private val callBack: HIDDeviceCal
         override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
             Log.d(LOG_TAG, "HID profile proxy connected")
             val device = proxy as BluetoothHidDevice
+            if (closed) {
+                // close() ran before the proxy arrived: never register on a dead instance
+                adapter?.closeProfileProxy(BluetoothProfile.HID_DEVICE, device)
+                return
+            }
             hid = device
             val sdp = BluetoothHidDeviceAppSdpSettings(
                 SDP_NAME,
@@ -124,6 +132,7 @@ class HIDDevice(private val context: Context, private val callBack: HIDDeviceCal
 
     /** Gets the HID profile proxy and registers the HID app. */
     fun open() {
+        closed = false
         val a = adapter
         when {
             a == null -> callBack.onError(HIDDeviceExitCode.ERROR_BLUETOOTH_NOT_SUPPORTED)
@@ -137,6 +146,7 @@ class HIDDevice(private val context: Context, private val callBack: HIDDeviceCal
 
     /** Unregisters the HID app and releases the profile proxy. */
     fun close() {
+        closed = true
         val h = hid ?: return
         try {
             h.unregisterApp()

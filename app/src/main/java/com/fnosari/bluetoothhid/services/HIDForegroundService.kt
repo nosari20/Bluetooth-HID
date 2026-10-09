@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
 import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.content.Intent
@@ -88,6 +91,21 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
     private var mouseButtons = 0
     private var closing = false
 
+    /** Follows Bluetooth on/off at runtime. */
+    private val adapterReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)) {
+                // The profile proxy stays registered: on STATE_ON the system reconnects it,
+                // onServiceConnected registers the app again and onAppRegistered → Idle.
+                BluetoothAdapter.STATE_OFF -> {
+                    queue.failJobs()
+                    _state.value = HIDState.Unavailable(HIDDevice.HIDDeviceExitCode.ERROR_BLUETOOTH_NOT_ENABLED)
+                    updateNotification(getString(R.string.notification_idle), connected = false)
+                }
+            }
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         preferences = DataStorePreferencesProvider(this, scope)
@@ -100,6 +118,7 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
             buildNotification(getString(R.string.notification_idle), connected = false),
             ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
         )
+        registerReceiver(adapterReceiver, IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED))
         device.open()
     }
 
@@ -115,6 +134,9 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
 
     override fun onDestroy() {
         closing = true
+        unregisterReceiver(adapterReceiver)
+        _state.value = HIDState.Idle
+        _typing.value = null
         queue.stop()
         device.close()
         scope.cancel()
@@ -149,7 +171,8 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
                 updateNotification(getString(R.string.notification_connected, host.name), connected = true)
             }
             BluetoothProfile.STATE_DISCONNECTED -> {
-                queue.cancelJobs()
+                // host lost while typing → Failed(index) so the user can resume
+                queue.failJobs()
                 if (_state.value !is HIDState.Unavailable) _state.value = HIDState.Idle
                 _layout.value = Layouts.byId(defaultLayoutId())
                 updateNotification(getString(R.string.notification_idle), connected = false)

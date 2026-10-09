@@ -7,7 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
             BluetoothHIDTheme {
                 PermissionsGate {
                     val context = LocalContext.current
-                    LaunchedEffect(Unit) { HIDForegroundService.start(context) }
+                    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { HIDForegroundService.start(context) }
                     MainActivityNavigation()
                 }
             }
