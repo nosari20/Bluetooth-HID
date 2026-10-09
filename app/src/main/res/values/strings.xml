@@ -1,3 +1,111 @@
 <resources>
     <string name="app_name">Bluetooth HID</string>
+    <string name="scan_activity_name">Scan</string>
+    <string name="keyboard_activity_name">Keyboard</string>
+    <string name="mouse_activity_name">Mouse</string>
+    <string name="settings_activity_name">Settings</string>
+    <string name="go_back">Go back</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">Connection</string>
+    <string name="notification_idle">Waiting for a host</string>
+    <string name="notification_connected">Connected to %1$s</string>
+    <string name="notification_disconnect">Disconnect</string>
+    <string name="notification_quit">Quit</string>
+
+    <!-- Connection state -->
+    <string name="state_starting">Starting…</string>
+    <string name="state_idle">Not connected</string>
+    <string name="state_connecting">Connecting to %1$s…</string>
+    <string name="state_connected">Connected to %1$s</string>
+    <string name="error_bluetooth_not_supported">This device has no Bluetooth.</string>
+    <string name="error_bluetooth_not_enabled">Bluetooth is off.</string>
+    <string name="error_permission">Bluetooth permission not granted.</string>
+    <string name="error_hid_not_supported">This phone does not support the Bluetooth HID device profile.</string>
+    <string name="error_hid_register_failed">Could not register as keyboard. Close other keyboard/mouse emulator apps and retry.</string>
+    <string name="error_hid_not_connected">No host connected.</string>
+    <string name="error_hid_send_failed">Sending to host failed.</string>
+    <string name="action_enable_bluetooth">Turn on Bluetooth</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_open_settings">Open app settings</string>
+
+    <!-- Permissions -->
+    <string name="permissions_title">Permissions needed</string>
+    <string name="permissions_text">Bluetooth permission lets the app act as a keyboard and mouse for your computer. Notifications show the connection status.</string>
+    <string name="permissions_grant">Grant</string>
+
+    <!-- Home -->
+    <string name="home_tile_scan">Scan &amp; type</string>
+    <string name="home_tile_keyboard">Keyboard</string>
+    <string name="home_tile_mouse">Mouse</string>
+    <string name="home_tile_settings">Settings</string>
+    <string name="home_devices">Hosts</string>
+    <string name="home_disconnect">Disconnect</string>
+    <string name="home_layout">Host layout: %1$s</string>
+    <string name="banner_connect_host">Connect a host first</string>
+
+    <!-- Devices -->
+    <string name="devices_title">Hosts</string>
+    <string name="devices_paired">Paired devices</string>
+    <string name="devices_empty">No paired device yet.</string>
+    <string name="devices_connect">Connect</string>
+    <string name="devices_pair_new">Pair new host</string>
+    <string name="devices_pair_help">Your phone is now visible for 2 minutes. On the computer open Bluetooth settings, choose “Add device” and select this phone. Windows: Settings › Bluetooth &amp; devices › Add device. macOS: System Settings › Bluetooth. Linux: Bluetooth settings.</string>
+
+    <!-- Layouts -->
+    <string name="layout_us">US (QWERTY)</string>
+    <string name="layout_fr_win">French AZERTY (Windows)</string>
+    <string name="layout_fr_linux">French AZERTY (Linux)</string>
+    <string name="layout_fr_mac">French AZERTY (Mac)</string>
+    <string name="layout_choose">Host keyboard layout</string>
+
+    <!-- Scan -->
+    <string name="scan_camera_permission">Camera permission is needed to scan codes.</string>
+    <string name="scan_hint">Point the camera at a QR code or barcode</string>
+    <string name="preview_title">Scanned text</string>
+    <string name="preview_chars">%1$d characters</string>
+    <string name="preview_unmappable">%1$d characters cannot be typed with this layout and will be skipped (in red).</string>
+    <string name="preview_type">Type</string>
+    <string name="preview_copy">Copy</string>
+    <string name="preview_rescan">Rescan</string>
+    <string name="preview_copied">Copied</string>
+    <string name="typing_progress">Typing %1$d / %2$d</string>
+    <string name="typing_cancel">Cancel</string>
+    <string name="typing_done">Done</string>
+    <string name="typing_cancelled">Typing cancelled</string>
+    <string name="typing_interrupted">Typing interrupted at character %1$d</string>
+    <string name="typing_resume">Resume</string>
+
+    <!-- Keyboard -->
+    <string name="keyboard_live">Live</string>
+    <string name="keyboard_block">Block</string>
+    <string name="keyboard_hint_live">Type here, keys go straight to the host</string>
+    <string name="keyboard_hint_block">Write text, then press Send</string>
+    <string name="keyboard_send">Send</string>
+    <string name="keyboard_clear">Clear</string>
+
+    <!-- Mouse -->
+    <string name="mouse_left">Left</string>
+    <string name="mouse_right">Right</string>
+    <string name="mouse_hint">1 finger: move · tap: click · 2 fingers: scroll / right click · long press: drag</string>
+
+    <!-- Settings -->
+    <string name="settings_typing">Typing</string>
+    <string name="settings_speed">Typing speed</string>
+    <string name="speed_fast">Fast</string>
+    <string name="speed_normal">Normal</string>
+    <string name="speed_safe">Safe</string>
+    <string name="settings_default_layout">Default layout for new hosts</string>
+    <string name="settings_auto_type">Type automatically after scan</string>
+    <string name="settings_enter_at_end">Press Enter after scanned text</string>
+    <string name="settings_connection">Connection</string>
+    <string name="settings_auto_reconnect">Reconnect last host on start</string>
+    <string name="settings_mouse">Mouse</string>
+    <string name="settings_mouse_sensitivity">Pointer sensitivity</string>
+    <string name="settings_language">Language</string>
+    <string name="language_system">System default</string>
+    <string name="language_en">English</string>
+    <string name="language_fr">Français</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version %1$s</string>
 </resources>

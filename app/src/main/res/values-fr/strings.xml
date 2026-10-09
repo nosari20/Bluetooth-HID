@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">Bluetooth HID</string>
+    <string name="scan_activity_name">Scanner</string>
+    <string name="keyboard_activity_name">Clavier</string>
+    <string name="mouse_activity_name">Souris</string>
+    <string name="settings_activity_name">Paramètres</string>
+    <string name="go_back">Retour</string>
+
+    <string name="notification_channel_name">Connexion</string>
+    <string name="notification_idle">En attente d’un hôte</string>
+    <string name="notification_connected">Connecté à %1$s</string>
+    <string name="notification_disconnect">Déconnecter</string>
+    <string name="notification_quit">Quitter</string>
+
+    <string name="state_starting">Démarrage…</string>
+    <string name="state_idle">Non connecté</string>
+    <string name="state_connecting">Connexion à %1$s…</string>
+    <string name="state_connected">Connecté à %1$s</string>
+    <string name="error_bluetooth_not_supported">Cet appareil n’a pas de Bluetooth.</string>
+    <string name="error_bluetooth_not_enabled">Le Bluetooth est désactivé.</string>
+    <string name="error_permission">Autorisation Bluetooth refusée.</string>
+    <string name="error_hid_not_supported">Ce téléphone ne prend pas en charge le profil Bluetooth HID.</string>
+    <string name="error_hid_register_failed">Impossible de s’enregistrer comme clavier. Fermez les autres applis clavier/souris et réessayez.</string>
+    <string name="error_hid_not_connected">Aucun hôte connecté.</string>
+    <string name="error_hid_send_failed">L’envoi vers l’hôte a échoué.</string>
+    <string name="action_enable_bluetooth">Activer le Bluetooth</string>
+    <string name="action_retry">Réessayer</string>
+    <string name="action_open_settings">Ouvrir les paramètres de l’appli</string>
+
+    <string name="permissions_title">Autorisations nécessaires</string>
+    <string name="permissions_text">L’autorisation Bluetooth permet à l’appli de servir de clavier et de souris pour votre ordinateur. Les notifications affichent l’état de la connexion.</string>
+    <string name="permissions_grant">Autoriser</string>
+
+    <string name="home_tile_scan">Scanner et taper</string>
+    <string name="home_tile_keyboard">Clavier</string>
+    <string name="home_tile_mouse">Souris</string>
+    <string name="home_tile_settings">Paramètres</string>
+    <string name="home_devices">Hôtes</string>
+    <string name="home_disconnect">Déconnecter</string>
+    <string name="home_layout">Disposition de l’hôte : %1$s</string>
+    <string name="banner_connect_host">Connectez d’abord un hôte</string>
+
+    <string name="devices_title">Hôtes</string>
+    <string name="devices_paired">Appareils associés</string>
+    <string name="devices_empty">Aucun appareil associé.</string>
+    <string name="devices_connect">Connecter</string>
+    <string name="devices_pair_new">Associer un nouvel hôte</string>
+    <string name="devices_pair_help">Votre téléphone est visible pendant 2 minutes. Sur l’ordinateur, ouvrez les paramètres Bluetooth, choisissez « Ajouter un appareil » et sélectionnez ce téléphone. Windows : Paramètres › Bluetooth et appareils › Ajouter un appareil. macOS : Réglages Système › Bluetooth. Linux : paramètres Bluetooth.</string>
+
+    <string name="layout_us">US (QWERTY)</string>
+    <string name="layout_fr_win">Français AZERTY (Windows)</string>
+    <string name="layout_fr_linux">Français AZERTY (Linux)</string>
+    <string name="layout_fr_mac">Français AZERTY (Mac)</string>
+    <string name="layout_choose">Disposition clavier de l’hôte</string>
+
+    <string name="scan_camera_permission">L’autorisation caméra est nécessaire pour scanner.</string>
+    <string name="scan_hint">Visez un QR code ou un code-barres</string>
+    <string name="preview_title">Texte scanné</string>
+    <string name="preview_chars">%1$d caractères</string>
+    <string name="preview_unmappable">%1$d caractères ne peuvent pas être tapés avec cette disposition et seront ignorés (en rouge).</string>
+    <string name="preview_type">Taper</string>
+    <string name="preview_copy">Copier</string>
+    <string name="preview_rescan">Rescanner</string>
+    <string name="preview_copied">Copié</string>
+    <string name="typing_progress">Saisie %1$d / %2$d</string>
+    <string name="typing_cancel">Annuler</string>
+    <string name="typing_done">Terminé</string>
+    <string name="typing_cancelled">Saisie annulée</string>
+    <string name="typing_interrupted">Saisie interrompue au caractère %1$d</string>
+    <string name="typing_resume">Reprendre</string>
+
+    <string name="keyboard_live">Direct</string>
+    <string name="keyboard_block">Bloc</string>
+    <string name="keyboard_hint_live">Tapez ici, les touches partent directement vers l’hôte</string>
+    <string name="keyboard_hint_block">Écrivez le texte puis appuyez sur Envoyer</string>
+    <string name="keyboard_send">Envoyer</string>
+    <string name="keyboard_clear">Effacer</string>
+
+    <string name="mouse_left">Gauche</string>
+    <string name="mouse_right">Droit</string>
+    <string name="mouse_hint">1 doigt : déplacer · appui : clic · 2 doigts : défiler / clic droit · appui long : glisser</string>
+
+    <string name="settings_typing">Saisie</string>
+    <string name="settings_speed">Vitesse de saisie</string>
+    <string name="speed_fast">Rapide</string>
+    <string name="speed_normal">Normale</string>
+    <string name="speed_safe">Sûre</string>
+    <string name="settings_default_layout">Disposition par défaut des nouveaux hôtes</string>
+    <string name="settings_auto_type">Taper automatiquement après le scan</string>
+    <string name="settings_enter_at_end">Appuyer sur Entrée après le texte scanné</string>
+    <string name="settings_connection">Connexion</string>
+    <string name="settings_auto_reconnect">Reconnecter le dernier hôte au démarrage</string>
+    <string name="settings_mouse">Souris</string>
+    <string name="settings_mouse_sensitivity">Sensibilité du pointeur</string>
+    <string name="settings_language">Langue</string>
+    <string name="language_system">Langue du système</string>
+    <string name="language_en">English</string>
+    <string name="language_fr">Français</string>
+    <string name="settings_about">À propos</string>
+    <string name="settings_version">Version %1$s</string>
+</resources>
