@@ -24,8 +24,9 @@ Success criteria:
 - Connection survives switching between app screens and the camera.
 - No stuck modifiers after cancel or disconnect.
 
-Hosts: Windows, macOS, Linux. Host layouts: US QWERTY, FR AZERTY
-(Windows/Linux), FR AZERTY (Mac).
+Hosts: Windows, macOS, Linux. Host layouts: US QWERTY, FR AZERTY (Windows),
+FR AZERTY (Linux), FR AZERTY (Mac). Windows and Linux FR differ only in
+whether AltGr+2 (`~`) and AltGr+7 (`` ` ``) are dead keys (Windows: dead; Linux: not).
 
 Constraints: minSdk 36, targetSdk 37, Kotlin + Compose + Material3. No
 network, no analytics. UI strings EN (`values/`) + FR (`values-fr/`),
@@ -63,7 +64,7 @@ com/fnosari/bluetoothhid/
 │  ├─ HIDReportQueue.kt             paced single-thread sender
 │  └─ layouts/
 │     ├─ KeyboardLayout.kt          interface + KeyStroke + HIDKeys usage constants
-│     ├─ UsLayout.kt, FrAzertyLayout.kt, FrMacLayout.kt
+│     ├─ UsLayout.kt, FrAzertyLayout.kt (windows|linux), FrMacLayout.kt, Layouts.kt
 │     └─ TextTyper.kt               text → List<HIDReport.Keyboard>
 ├─ model/Host.kt, TypingSpeed.kt
 ├─ persistance/preferences/         PreferencesProvider, DataStorePreferencesProvider, Preferences (keys)
