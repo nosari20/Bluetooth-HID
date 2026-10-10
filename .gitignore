@@ -16,3 +16,12 @@ local.properties
 
 # Local agent scratch
 .superpowers/
+
+# Release outputs and signing material: never commit
+/app/release/
+*.aab
+*.apk
+*.jks
+*.keystore
+*.p12
+keystore.properties

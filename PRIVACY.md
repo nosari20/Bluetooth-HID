@@ -16,3 +16,7 @@ Bluetooth HID collects **no data**.
 | Notifications | Show the connection status of the foreground service |
 | Foreground service (connected device) | Keep the connection alive while you switch screens |
 | Vibrate | Confirm slide changes in Presenter mode |
+
+## Contact
+
+Questions about this policy: open an issue at https://github.com/nosari20/Bluetooth-HID/issues.

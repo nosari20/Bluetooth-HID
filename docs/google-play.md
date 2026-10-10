@@ -16,14 +16,14 @@ Everything needed to publish **Bluetooth HID** on Google Play. Listing texts and
 | Category | **Tools** |
 | Tags | Keyboard, Remote control, Productivity |
 | Contact email | *(required — your support address)* |
-| Website | https://github.com/nosari20/Bluetooth-HID |
-| Privacy policy | https://github.com/nosari20/Bluetooth-HID/blob/main/PRIVACY.md |
+| Website | https://nosari20.github.io/apps/bluetooth-hid/ |
+| Privacy policy | https://nosari20.github.io/apps/bluetooth-hid/privacy/ (copy of `PRIVACY.md`, keep in sync) |
 
 Screenshots were captured on a Pixel 10 Pro XL (demo-mode status bar) and framed to 9:16, because raw 1080×2404 captures exceed Play's 2:1 aspect-ratio limit.
 
 ## App content (Policy › App content)
 
-**Privacy policy** — URL above.
+**Privacy policy** — https://nosari20.github.io/apps/bluetooth-hid/privacy/
 
 **Ads** — No, the app contains no ads.
 

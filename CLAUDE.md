@@ -39,6 +39,7 @@ Windows: if a build fails with `AccessDeniedException` / `Unable to delete direc
 6. **Layouts** map characters by US key position; new layouts need a test like `FrAzertyLayoutTest` and an entry in `TextTyperTest.randomPasswordsRoundTrip`.
 7. **Verify on a real phone** for anything touching HID — the emulator registers the HID app but cannot type into a real host. Wireless debugging: `adb connect <ip:port>`; screenshot with `adb exec-out screencap -p > shot.png`. Do not send keys to the host computer without the user's OK: they land in whatever window has focus.
 8. Commits: Conventional Commits; update `CHANGELOG.md` under *Unreleased*.
+9. `PRIVACY.md` is published at https://nosari20.github.io/apps/bluetooth-hid/privacy/ (the Play policy URL) from the site repo `../../nosari20.github.io/content/apps/bluetooth-hid/privacy.md`; after editing it, paste the body there and bump `lastmod`.
 
 ## Gotchas
 
