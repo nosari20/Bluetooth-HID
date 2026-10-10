@@ -48,6 +48,10 @@
             android:exported="false"
             android:label="@string/mouse_activity_name" />
         <activity
+            android:name=".activities.presenter.PresenterActivity"
+            android:exported="false"
+            android:label="@string/presenter_activity_name" />
+        <activity
             android:name=".activities.settings.SettingsActivity"
             android:exported="false"
             android:label="@string/settings_activity_name" />

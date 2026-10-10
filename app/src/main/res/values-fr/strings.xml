@@ -34,7 +34,7 @@
     <string name="home_tile_scan">Scanner et taper</string>
     <string name="home_tile_keyboard">Clavier</string>
     <string name="home_tile_mouse">Souris</string>
-    <string name="home_tile_settings">Paramètres</string>
+    <string name="home_tile_presenter">Présentation</string>
     <string name="home_devices">Hôtes</string>
     <string name="home_disconnect">Déconnecter</string>
     <string name="home_layout">Disposition de l’hôte : %1$s</string>
@@ -79,6 +79,13 @@
     <string name="mouse_left">Gauche</string>
     <string name="mouse_right">Droit</string>
     <string name="mouse_hint">1 doigt : déplacer · appui : clic · 2 doigts : défiler / clic droit · appui long : glisser</string>
+
+    <string name="presenter_activity_name">Présentation</string>
+    <string name="presenter_next">Suivant</string>
+    <string name="presenter_previous">Précédent</string>
+    <string name="presenter_play_video">Lire la vidéo</string>
+    <string name="presenter_media">Média</string>
+    <string name="presenter_volume_hint">Touches de volume : bas = diapo suivante, haut = diapo précédente</string>
 
     <string name="settings_typing">Saisie</string>
     <string name="settings_speed">Vitesse de saisie</string>

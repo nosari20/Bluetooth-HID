@@ -18,6 +18,8 @@ import androidx.compose.material.icons.rounded.Keyboard
 import androidx.compose.material.icons.rounded.Mouse
 import androidx.compose.material.icons.rounded.QrCodeScanner
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Slideshow
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedCard
@@ -37,6 +39,7 @@ import com.fnosari.bluetoothhid.R
 import com.fnosari.bluetoothhid.activities.keyboard.KeyboardActivity
 import com.fnosari.bluetoothhid.activities.main.MainActivity
 import com.fnosari.bluetoothhid.activities.mouse.MouseActivity
+import com.fnosari.bluetoothhid.activities.presenter.PresenterActivity
 import com.fnosari.bluetoothhid.activities.scan.ScanActivity
 import com.fnosari.bluetoothhid.activities.settings.SettingsActivity
 import com.fnosari.bluetoothhid.connectivity.hid.HIDDevice.HIDDeviceExitCode
@@ -58,7 +61,14 @@ fun HomeScreen(navController: NavController) {
         service?.retry()
     }
 
-    BasicLayoutWithTopBar(title = stringResource(R.string.app_name)) {
+    BasicLayoutWithTopBar(
+        title = stringResource(R.string.app_name),
+        rightActions = {
+            IconButton(onClick = { context.startActivity(Intent(context, SettingsActivity::class.java)) }) {
+                Icon(Icons.Rounded.Settings, contentDescription = stringResource(R.string.settings_activity_name))
+            }
+        }
+    ) {
         Column(
             modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -110,8 +120,8 @@ fun HomeScreen(navController: NavController) {
                 Tile(Icons.Rounded.Mouse, stringResource(R.string.home_tile_mouse), Modifier.weight(1f)) {
                     context.startActivity(Intent(context, MouseActivity::class.java))
                 }
-                Tile(Icons.Rounded.Settings, stringResource(R.string.home_tile_settings), Modifier.weight(1f)) {
-                    context.startActivity(Intent(context, SettingsActivity::class.java))
+                Tile(Icons.Rounded.Slideshow, stringResource(R.string.home_tile_presenter), Modifier.weight(1f)) {
+                    context.startActivity(Intent(context, PresenterActivity::class.java))
                 }
             }
         }
