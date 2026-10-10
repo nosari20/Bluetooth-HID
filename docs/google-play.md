@@ -47,22 +47,11 @@ Why "No" is accurate: the app has no internet permission (ML Kit's `INTERNET`/`A
 
 ### Foreground service declaration
 
-Play asks for this because the app declares `FOREGROUND_SERVICE_CONNECTED_DEVICE`. The permission is allowed only if the app "performs tasks noticeable to the user when they're not directly interacting with your app". This app does:
-
-- **Typing continues after the user leaves the app.** A long scanned text (password, Wi-Fi key, configuration string) keeps being typed on the computer if the user switches to another app mid-way. The characters keep appearing on the computer screen.
-- **The computer keeps its keyboard and mouse.** While the user is in another app, the paired computer still sees the phone as a connected Bluetooth keyboard/mouse. Stopping the service would disconnect it on the computer.
-- **Always visible.** A persistent notification names the connected computer and offers *Disconnect* and *Quit*.
-
-Answers for *App content › Foreground service permissions*:
-
-- **Task type:** Connected device (interaction with an external device over Bluetooth).
-- **Description:** "Bluetooth HID turns the phone into a Bluetooth keyboard and mouse for the user's computer. After the user connects a computer, a foreground service keeps that Bluetooth HID connection open and finishes typing long text the user started, for example a scanned password, even if the user switches to another app. The connection is user-initiated, shown by a persistent notification naming the computer with Disconnect and Quit actions, and ends when the user disconnects or quits."
-- **User impact if the task is deferred or interrupted:** "The computer immediately loses its keyboard and mouse. Text being typed is cut off mid-way, so a password or configuration string ends up partially typed on the computer."
-- **Video** (unlisted YouTube or Drive link): connect a computer → Scan & type a long QR text → press Home mid-typing and show the text still arriving on the computer → pull down the notification (computer name, Disconnect/Quit) → tap Disconnect.
+Not needed. Since 1.0.1 the app has **no foreground service** and no `FOREGROUND_SERVICE*` permission, so the Console does not ask for a declaration or a video. If a release still shows the question, the uploaded bundle is older than 1.0.1 (version code 2).
 
 ### Permissions
 
-No restricted permissions (SMS, call log, location, accessibility, all-files) are used, so no extra declaration forms are needed. Nearby devices (Bluetooth), Camera and Notifications are standard runtime permissions explained in [PRIVACY.md](../PRIVACY.md).
+No restricted permissions (SMS, call log, location, accessibility, all-files) are used, so no extra declaration forms are needed. Nearby devices (Bluetooth) and Camera are standard runtime permissions explained in [PRIVACY.md](../PRIVACY.md).
 
 ## Release checklist
 

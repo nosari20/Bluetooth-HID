@@ -43,5 +43,5 @@ body:
     id: logs
     attributes:
       label: Logs (optional)
-      description: "`adb logcat -s HIDDevice HIDForegroundService`"
+      description: "`adb logcat -s HIDDevice HIDService`"
       render: text

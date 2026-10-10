@@ -12,7 +12,7 @@ import com.fnosari.bluetoothhid.connectivity.hid.PresenterAction
 import com.fnosari.bluetoothhid.connectivity.hid.PresenterKeys
 import com.fnosari.bluetoothhid.persistance.preferences.DataStorePreferencesProvider
 import com.fnosari.bluetoothhid.persistance.preferences.Preferences
-import com.fnosari.bluetoothhid.services.HIDForegroundService
+import com.fnosari.bluetoothhid.services.HIDService
 import com.fnosari.bluetoothhid.ui.theme.BluetoothHIDTheme
 import com.fnosari.bluetoothhid.utils.SlideVibrator
 
@@ -22,7 +22,7 @@ import com.fnosari.bluetoothhid.utils.SlideVibrator
  */
 class PresenterActivity : ComponentActivity() {
 
-    private var service: HIDForegroundService? = null
+    private var service: HIDService? = null
     private lateinit var vibrator: SlideVibrator
     private var vibrate = true
 

@@ -16,7 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.fnosari.bluetoothhid.activities.main.components.PermissionsGate
 import com.fnosari.bluetoothhid.activities.main.screens.DevicesScreen
 import com.fnosari.bluetoothhid.activities.main.screens.HomeScreen
-import com.fnosari.bluetoothhid.services.HIDForegroundService
+import com.fnosari.bluetoothhid.services.HIDService
 import com.fnosari.bluetoothhid.ui.theme.BluetoothHIDTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
             BluetoothHIDTheme {
                 PermissionsGate {
                     val context = LocalContext.current
-                    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { HIDForegroundService.start(context) }
+                    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { HIDService.start(context) }
                     MainActivityNavigation()
                 }
             }

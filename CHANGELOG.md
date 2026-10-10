@@ -7,7 +7,10 @@ All notable changes to this project are documented here. The format follows [Kee
 ## [1.0.1] - 2026-10-10
 
 ### Changed
-- The connection service is a foreground service (with notification) only while a computer is connecting/connected or text is being typed; it stops when idle and the app is closed (Google Play foreground-service policy).
+- No foreground service any more: no persistent notification and no notification permission. The connection is held while the app is in use and stops when the app is idle and closed. Reopening the app reconnects to the last computer.
+
+### Removed
+- `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_CONNECTED_DEVICE` and `POST_NOTIFICATIONS` permissions.
 - Privacy policy hosted at https://nosari20.github.io/apps/bluetooth-hid/privacy/, with a contact section.
 
 ### Changed

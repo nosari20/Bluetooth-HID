@@ -12,13 +12,13 @@ class ServicePolicyTest {
     private val unavailable = HIDState.Unavailable(HIDDeviceExitCode.ERROR_BLUETOOTH_NOT_ENABLED)
 
     @Test
-    fun foregroundOnlyWhileConnectingConnectedOrTyping() {
-        assertTrue(ServicePolicy.needsForeground(HIDState.Connected(host), typing = false))
-        assertTrue(ServicePolicy.needsForeground(HIDState.Connecting(host), typing = false))
-        assertTrue(ServicePolicy.needsForeground(HIDState.Idle, typing = true))
-        assertFalse(ServicePolicy.needsForeground(HIDState.Idle, typing = false))
-        assertFalse(ServicePolicy.needsForeground(HIDState.Starting, typing = false))
-        assertFalse(ServicePolicy.needsForeground(unavailable, typing = false))
+    fun busyWhileConnectingConnectedOrTyping() {
+        assertTrue(ServicePolicy.isBusy(HIDState.Connected(host), typing = false))
+        assertTrue(ServicePolicy.isBusy(HIDState.Connecting(host), typing = false))
+        assertTrue(ServicePolicy.isBusy(HIDState.Idle, typing = true))
+        assertFalse(ServicePolicy.isBusy(HIDState.Idle, typing = false))
+        assertFalse(ServicePolicy.isBusy(HIDState.Starting, typing = false))
+        assertFalse(ServicePolicy.isBusy(unavailable, typing = false))
     }
 
     @Test

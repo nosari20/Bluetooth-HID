@@ -1,2 +1,3 @@
-• Connection notification only shows while a computer is connected or text is being typed
+• No more persistent notification: the connection runs only while you use the app
+• Fewer permissions (no notification permission)
 • Privacy policy now hosted on nosari20.github.io
