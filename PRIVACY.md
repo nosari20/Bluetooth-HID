@@ -1,0 +1,18 @@
+# Privacy
+
+Bluetooth HID collects **no data**.
+
+- **No internet access.** The app has no `INTERNET` permission. Barcode scanning uses Google ML Kit's *bundled* on-device model; nothing is uploaded.
+- **No analytics, ads or crash reporting.**
+- **Stored on the phone only** (app preferences): typing speed, chosen keyboard layout per paired computer (keyed by Bluetooth address), last connected computer, and UI settings. Uninstalling the app deletes them.
+- **Scanned and typed text** is kept in memory only while on screen and sent only to the computer you connected. *Copy* puts scanned text on the clipboard marked as sensitive.
+
+## Permissions
+
+| Permission | Why |
+|---|---|
+| Nearby devices (Bluetooth connect/advertise) | Act as a Bluetooth keyboard/mouse and become discoverable for pairing |
+| Camera | Scan QR codes and barcodes (Scan & type only) |
+| Notifications | Show the connection status of the foreground service |
+| Foreground service (connected device) | Keep the connection alive while you switch screens |
+| Vibrate | Confirm slide changes in Presenter mode |
