@@ -17,7 +17,7 @@ Built because existing "scan a QR code and type it" apps were slow and sometimes
 - **Mouse** — touchpad with acceleration, tap to click, two-finger scroll and right-click, long-press drag lock, hold-to-drag buttons.
 - **Presenter** — big Next/Previous zones (PageDown/PageUp, like commercial clickers), **phone volume keys change slides**, PowerPoint video play/pause, media play/pause, vibration on each slide change, screen kept on, and a YouTube-style **screen lock** so only the volume keys act.
 - **Exact typing across layouts** — the computer's keyboard layout decides which character a key prints, so the app maps text per host layout: **US QWERTY, French AZERTY (Windows), French AZERTY (Linux), French AZERTY (Mac)**, including dead-key accents (`ê`, `ï`…). The layout is remembered per computer.
-- **Reliable link** — one service holds the connection across screens (no notification); reports go through one paced queue (Fast 6 ms / Normal 10 ms / Safe 25 ms) with retries, and every cancel or failure releases all keys so nothing stays stuck.
+- **Reliable link** — one service holds the connection while you move between the app's screens (no notification); Android drops a keyboard app about 15 s after it leaves the screen, and the app reconnects by itself when you return; reports go through one paced queue (Fast 6 ms / Normal 10 ms / Safe 25 ms) with retries, and every cancel or failure releases all keys so nothing stays stuck.
 - English and French UI. No network access, no analytics.
 
 ## Requirements

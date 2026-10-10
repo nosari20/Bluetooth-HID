@@ -7,7 +7,7 @@ All notable changes to this project are documented here. The format follows [Kee
 ## [1.0.1] - 2026-10-10
 
 ### Changed
-- No foreground service any more: no persistent notification and no notification permission. The connection is held while the app is in use and stops when the app is idle and closed. Reopening the app reconnects to the last computer.
+- No foreground service any more: no persistent notification and no notification permission. The connection is held while the app is in use and stops when the app is idle and closed. Android disconnects the keyboard about 15 s after the app leaves the screen; reopening the app reconnects to the last computer.
 
 ### Removed
 - `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_CONNECTED_DEVICE` and `POST_NOTIFICATIONS` permissions.

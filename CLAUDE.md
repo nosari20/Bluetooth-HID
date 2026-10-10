@@ -43,7 +43,7 @@ Windows: if a build fails with `AccessDeniedException` / `Unable to delete direc
 
 ## Gotchas
 
-- `HIDService` is a plain (not foreground) service: no notification, no foreground-service permission, nothing to declare on Play. Screens start and bind it via `rememberHIDService()`; it stops when idle with no screen visible (`ServicePolicy`, unit-tested). Don't reintroduce a foreground service without a Play declaration and video.
+- `HIDService` is a plain (not foreground) service: no notification, no foreground-service permission, nothing to declare on Play. Screens start and bind it via `rememberHIDService()`; it stops when idle with no screen visible (`ServicePolicy`, unit-tested). Consequence (measured, Android's `HidDeviceService.unregisterAppUid`): ~15 s after the app leaves the foreground the system unregisters the HID app and the host disconnects; returning re-registers and auto-reconnects. Keeping the host connected in the background would need a `connectedDevice` foreground service again, plus a Play declaration and video.
 - System "touch feedback" off silences `performHapticFeedback`; Presenter uses `SlideVibrator` (media usage) instead.
 - A host paired while another HID app was active keeps that app's descriptor → reports ignored. Fix: unpair on both sides, pair again.
 - `DataStorePreferencesProvider` reads with `runBlocking` (ClassLock pattern) — fine for small reads, avoid in hot paths.
