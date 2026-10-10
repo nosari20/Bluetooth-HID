@@ -87,6 +87,8 @@
     <string name="presenter_media">Média</string>
     <string name="presenter_volume_hint">Touches de volume : bas = diapo suivante, haut = diapo précédente</string>
 
+    <string name="settings_presenter">Présentation</string>
+    <string name="settings_presenter_vibrate">Vibrer à chaque changement de diapo</string>
     <string name="settings_typing">Saisie</string>
     <string name="settings_speed">Vitesse de saisie</string>
     <string name="speed_fast">Rapide</string>

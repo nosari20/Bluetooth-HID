@@ -51,6 +51,7 @@ fun SettingsScreen(onBack: () -> Unit) {
     var autoType by remember { mutableStateOf(prefs.readBoolean(Preferences.AUTO_TYPE, false)) }
     var enterAtEnd by remember { mutableStateOf(prefs.readBoolean(Preferences.ENTER_AT_END, false)) }
     var autoReconnect by remember { mutableStateOf(prefs.readBoolean(Preferences.AUTO_RECONNECT, true)) }
+    var presenterVibrate by remember { mutableStateOf(prefs.readBoolean(Preferences.PRESENTER_VIBRATE, true)) }
     var sensitivity by remember { mutableFloatStateOf(prefs.readDouble(Preferences.MOUSE_SENSITIVITY, 1.0).toFloat()) }
     var language by remember { mutableStateOf(localeManager.applicationLocales.toLanguageTags()) }
     var pickLayout by remember { mutableStateOf(false) }
@@ -101,6 +102,12 @@ fun SettingsScreen(onBack: () -> Unit) {
                 valueRange = 0.5f..3f,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
+
+            HorizontalDivider()
+            Section(stringResource(R.string.settings_presenter))
+            SwitchRow(stringResource(R.string.settings_presenter_vibrate), presenterVibrate) {
+                presenterVibrate = it; prefs.write(Preferences.PRESENTER_VIBRATE, it)
+            }
 
             HorizontalDivider()
             Section(stringResource(R.string.settings_language))

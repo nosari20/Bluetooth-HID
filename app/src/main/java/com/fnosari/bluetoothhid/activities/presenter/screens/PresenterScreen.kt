@@ -25,36 +25,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fnosari.bluetoothhid.R
 import com.fnosari.bluetoothhid.connectivity.hid.HIDConsumer
 import com.fnosari.bluetoothhid.connectivity.hid.PresenterAction
-import com.fnosari.bluetoothhid.connectivity.hid.PresenterKeys
 import com.fnosari.bluetoothhid.services.HIDForegroundService
 import com.fnosari.bluetoothhid.services.HIDState
 import com.fnosari.bluetoothhid.ui.components.ConnectionBanner
 import com.fnosari.bluetoothhid.ui.components.connectionState
-import com.fnosari.bluetoothhid.ui.components.currentLayout
 import com.fnosari.bluetoothhid.ui.layouts.BasicLayoutWithTopBar
 import com.fnosari.bluetoothhid.utils.rememberHIDService
 
 @Composable
-fun PresenterScreen(onBack: () -> Unit, onService: (HIDForegroundService?) -> Unit) {
+fun PresenterScreen(
+    onBack: () -> Unit,
+    onService: (HIDForegroundService?) -> Unit,
+    onAction: (PresenterAction) -> Unit
+) {
     val service = rememberHIDService()
     val state = service.connectionState()
-    val layout = service.currentLayout()
-    val haptic = LocalHapticFeedback.current
     val enabled = state is HIDState.Connected
     SideEffect { onService(service) }
 
-    fun send(action: PresenterAction) {
-        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-        service?.sendStroke(PresenterKeys.strokeFor(action, layout.id))
-    }
+    fun send(action: PresenterAction) = onAction(action)
 
     BasicLayoutWithTopBar(title = stringResource(R.string.presenter_activity_name), leftAction = onBack) {
         Column(Modifier.fillMaxSize()) {
@@ -89,10 +84,7 @@ fun PresenterScreen(onBack: () -> Unit, onService: (HIDForegroundService?) -> Un
                         Text(stringResource(R.string.presenter_play_video), Modifier.padding(start = 8.dp))
                     }
                     OutlinedButton(
-                        onClick = {
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                            service?.sendConsumer(HIDConsumer.PLAY_PAUSE)
-                        },
+                        onClick = { service?.sendConsumer(HIDConsumer.PLAY_PAUSE) },
                         enabled = enabled,
                         modifier = Modifier.weight(1f)
                     ) {

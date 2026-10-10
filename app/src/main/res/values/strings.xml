@@ -98,6 +98,8 @@
     <string name="presenter_volume_hint">Volume keys: down = next slide, up = previous slide</string>
 
     <!-- Settings -->
+    <string name="settings_presenter">Presenter</string>
+    <string name="settings_presenter_vibrate">Vibrate on slide change</string>
     <string name="settings_typing">Typing</string>
     <string name="settings_speed">Typing speed</string>
     <string name="speed_fast">Fast</string>

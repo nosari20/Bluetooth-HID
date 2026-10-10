@@ -9,6 +9,7 @@ object Preferences {
     const val AUTO_RECONNECT = "auto_reconnect"        // Boolean, default true
     const val LAST_HOST = "last_host"                  // MAC address, default ""
     const val MOUSE_SENSITIVITY = "mouse_sensitivity"  // Double, default 1.0
+    const val PRESENTER_VIBRATE = "presenter_vibrate"  // Boolean, default true
 
     /** Layout id chosen for one host. */
     fun hostLayoutKey(address: String) = "host_layout_$address"
