@@ -85,6 +85,10 @@
     <string name="presenter_previous">Précédent</string>
     <string name="presenter_play_video">Lire la vidéo</string>
     <string name="presenter_media">Média</string>
+    <string name="presenter_lock">Verrouiller l’écran</string>
+    <string name="presenter_locked">Écran verrouillé</string>
+    <string name="presenter_locked_hint">Les touches de volume changent les diapos. Touchez pour afficher Déverrouiller.</string>
+    <string name="presenter_unlock">Déverrouiller</string>
     <string name="presenter_volume_hint">Touches de volume : bas = diapo suivante, haut = diapo précédente</string>
 
     <string name="settings_presenter">Présentation</string>

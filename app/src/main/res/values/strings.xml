@@ -95,6 +95,10 @@
     <string name="presenter_previous">Previous</string>
     <string name="presenter_play_video">Play video</string>
     <string name="presenter_media">Media</string>
+    <string name="presenter_lock">Lock screen</string>
+    <string name="presenter_locked">Screen locked</string>
+    <string name="presenter_locked_hint">Volume keys change slides. Tap to show Unlock.</string>
+    <string name="presenter_unlock">Unlock</string>
     <string name="presenter_volume_hint">Volume keys: down = next slide, up = previous slide</string>
 
     <!-- Settings -->
