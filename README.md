@@ -70,6 +70,10 @@ Design notes live in [`docs/superpowers/`](docs/superpowers/).
 
 Contributions are welcome — especially new keyboard layouts and host-compatibility reports. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
+## Google Play
+
+Store listing texts and graphics: [`fastlane/metadata/android/en-US/`](fastlane/metadata/android/en-US/). Console answers (data safety, content rating, foreground service): [docs/google-play.md](docs/google-play.md).
+
 ## Privacy
 
 The app has no internet permission and collects nothing. See [PRIVACY.md](PRIVACY.md).

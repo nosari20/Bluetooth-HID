@@ -1,0 +1,6 @@
+First release:
+• Scan a QR code or barcode and type it on your computer
+• Live keyboard with shortcuts, F-keys and media keys
+• Touchpad mouse with scroll and drag
+• Presenter remote: volume keys change slides, screen lock
+• Exact typing for US and French AZERTY (Windows, Linux, Mac)

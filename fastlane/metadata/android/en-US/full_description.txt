@@ -1,0 +1,31 @@
+Turn your Android phone into a Bluetooth keyboard, mouse and presentation remote for any computer. No app, driver or dongle on the computer: it simply pairs like a normal Bluetooth keyboard.
+
+<b>Scan & type</b>
+Scan a QR code or barcode and type its content on your computer: Wi-Fi keys, long passwords, URLs, serial numbers, configuration strings. Preview the text first; characters that the computer's keyboard layout cannot type are highlighted. A progress bar, Cancel and Resume (if the connection drops) keep long texts under control.
+
+<b>Exact typing, every time</b>
+The computer's keyboard layout decides which character each key prints. Bluetooth HID types for the layout you choose and remembers it per computer:
+• US QWERTY
+• French AZERTY (Windows)
+• French AZERTY (Linux)
+• French AZERTY (Mac)
+Accented letters such as é, è, à, ç, ê and ï are supported. Repeated characters and Shift/AltGr changes are handled, and keys are never left stuck down.
+
+<b>Keyboard</b>
+Type with your usual Android keyboard (swipe and voice typing work) and the text appears live on the computer, or write a block of text and send it in one go. A special-keys bar gives you Esc, Tab, arrows, Home/End, Page Up/Down, F1–F12, sticky Ctrl/Shift/Alt/AltGr/Win (⌘), common shortcuts and media keys.
+
+<b>Mouse</b>
+A touchpad with pointer acceleration: tap to click, two-finger tap for right-click, two-finger scroll, long-press to drag, and hold-to-drag buttons. Sensitivity is adjustable.
+
+<b>Presenter</b>
+Big Next and Previous areas for PowerPoint, Keynote, Google Slides and PDF viewers. The phone's volume keys change slides too, with a short vibration on each change. Play videos embedded in PowerPoint, and lock the screen YouTube-style so that only the volume keys work during your talk. The screen stays on while you present.
+
+<b>Private by design</b>
+• No internet permission, no ads, no analytics.
+• Your text goes only to the computer you connected.
+• Open source (Apache 2.0): github.com/nosari20/Bluetooth-HID
+
+<b>Requirements</b>
+Android 16 or newer with Bluetooth HID device support (Pixel phones and most recent devices). Works with Windows, macOS and Linux computers that have Bluetooth.
+
+Tip: if typing does nothing after using another keyboard app, remove the phone from the computer's Bluetooth devices and pair again.
