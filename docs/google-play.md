@@ -47,12 +47,18 @@ Why "No" is accurate: the app has no internet permission (ML Kit's `INTERNET`/`A
 
 ### Foreground service declaration
 
-The app declares `FOREGROUND_SERVICE_CONNECTED_DEVICE`. In *App content › Foreground service permissions*:
+Play asks for this because the app declares `FOREGROUND_SERVICE_CONNECTED_DEVICE`. The permission is allowed only if the app "performs tasks noticeable to the user when they're not directly interacting with your app". This app does:
 
-- **Type:** Connected device.
-- **Description:** "The service keeps the Bluetooth HID (keyboard/mouse) connection to the computer the user paired, so typing and mouse control keep working while the user moves between the app's screens (scanner, keyboard, mouse, presenter). It starts when the user opens the app, shows a persistent notification with Disconnect and Quit actions, and stops when the user quits."
-- **User impact if deferred or interrupted:** "The computer loses its keyboard and mouse mid-use. Text being typed would be cut off, and slides could no longer be controlled during a presentation."
-- **Video:** record a short screen capture: open the app → connected → switch to Keyboard / Presenter → notification with Disconnect/Quit.
+- **Typing continues after the user leaves the app.** A long scanned text (password, Wi-Fi key, configuration string) keeps being typed on the computer if the user switches to another app mid-way. The characters keep appearing on the computer screen.
+- **The computer keeps its keyboard and mouse.** While the user is in another app, the paired computer still sees the phone as a connected Bluetooth keyboard/mouse. Stopping the service would disconnect it on the computer.
+- **Always visible.** A persistent notification names the connected computer and offers *Disconnect* and *Quit*.
+
+Answers for *App content › Foreground service permissions*:
+
+- **Task type:** Connected device (interaction with an external device over Bluetooth).
+- **Description:** "Bluetooth HID turns the phone into a Bluetooth keyboard and mouse for the user's computer. After the user connects a computer, a foreground service keeps that Bluetooth HID connection open and finishes typing long text the user started, for example a scanned password, even if the user switches to another app. The connection is user-initiated, shown by a persistent notification naming the computer with Disconnect and Quit actions, and ends when the user disconnects or quits."
+- **User impact if the task is deferred or interrupted:** "The computer immediately loses its keyboard and mouse. Text being typed is cut off mid-way, so a password or configuration string ends up partially typed on the computer."
+- **Video** (unlisted YouTube or Drive link): connect a computer → Scan & type a long QR text → press Home mid-typing and show the text still arriving on the computer → pull down the notification (computer name, Disconnect/Quit) → tap Disconnect.
 
 ### Permissions
 
