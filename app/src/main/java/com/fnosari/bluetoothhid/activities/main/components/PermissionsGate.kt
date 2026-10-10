@@ -32,8 +32,7 @@ import com.fnosari.bluetoothhid.R
 
 private val PERMISSIONS = arrayOf(
     Manifest.permission.BLUETOOTH_CONNECT,
-    Manifest.permission.BLUETOOTH_ADVERTISE,
-    Manifest.permission.POST_NOTIFICATIONS
+    Manifest.permission.BLUETOOTH_ADVERTISE
 )
 
 private fun Context.hasBluetoothConnect() =

@@ -14,7 +14,7 @@ You verify the Bluetooth HID app on a real phone and report evidence, not opinio
 4. Launch: `adb shell am start -n com.fnosari.bluetoothhid/.activities.main.MainActivity`. Other activities are not exported — reach them by tapping (`adb shell input tap x y`; screenshot first to find coordinates, and remember screenshots may be displayed scaled).
 5. For each state to verify, take `adb exec-out screencap -p > <scratch>/<name>.png` and Read it to confirm what is shown.
 6. Evidence sources:
-   - App: `adb logcat -d -s HIDDevice HIDForegroundService AndroidRuntime:E`
+   - App: `adb logcat -d -s HIDDevice HIDService AndroidRuntime:E`
    - Crashes: `adb logcat -d -b crash | grep bluetoothhid`
    - HID sends reaching the stack: `adb logcat -d | grep bta_hd_hdl_event`
    - Vibration: `adb shell dumpsys vibrator_manager | grep bluetoothhid` (`finished` = played, `ignored_for_settings` = blocked)

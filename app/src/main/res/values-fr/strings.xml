@@ -6,10 +6,6 @@
     <string name="settings_activity_name">Paramètres</string>
     <string name="go_back">Retour</string>
 
-    <string name="notification_channel_name">Connexion</string>
-    <string name="notification_connected">Connecté à %1$s</string>
-    <string name="notification_disconnect">Déconnecter</string>
-    <string name="notification_quit">Quitter</string>
 
     <string name="state_starting">Démarrage…</string>
     <string name="state_idle">Non connecté</string>
@@ -27,7 +23,7 @@
     <string name="action_open_settings">Ouvrir les paramètres de l’appli</string>
 
     <string name="permissions_title">Autorisations nécessaires</string>
-    <string name="permissions_text">L’autorisation Bluetooth permet à l’appli de servir de clavier et de souris pour votre ordinateur. Les notifications affichent l’état de la connexion.</string>
+    <string name="permissions_text">L’autorisation Bluetooth permet à l’appli de servir de clavier et de souris pour votre ordinateur.</string>
     <string name="permissions_grant">Autoriser</string>
 
     <string name="home_tile_scan">Scanner et taper</string>

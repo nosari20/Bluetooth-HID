@@ -6,11 +6,6 @@
     <string name="settings_activity_name">Settings</string>
     <string name="go_back">Go back</string>
 
-    <!-- Notification -->
-    <string name="notification_channel_name">Connection</string>
-    <string name="notification_connected">Connected to %1$s</string>
-    <string name="notification_disconnect">Disconnect</string>
-    <string name="notification_quit">Quit</string>
 
     <!-- Connection state -->
     <string name="state_starting">Starting…</string>
@@ -30,7 +25,7 @@
 
     <!-- Permissions -->
     <string name="permissions_title">Permissions needed</string>
-    <string name="permissions_text">Bluetooth permission lets the app act as a keyboard and mouse for your computer. Notifications show the connection status.</string>
+    <string name="permissions_text">Bluetooth permission lets the app act as a keyboard and mouse for your computer.</string>
     <string name="permissions_grant">Grant</string>
 
     <!-- Home -->

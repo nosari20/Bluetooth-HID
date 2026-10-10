@@ -39,7 +39,7 @@ import com.fnosari.bluetoothhid.R
 import com.fnosari.bluetoothhid.activities.presenter.components.LockOverlay
 import com.fnosari.bluetoothhid.connectivity.hid.HIDConsumer
 import com.fnosari.bluetoothhid.connectivity.hid.PresenterAction
-import com.fnosari.bluetoothhid.services.HIDForegroundService
+import com.fnosari.bluetoothhid.services.HIDService
 import com.fnosari.bluetoothhid.services.HIDState
 import com.fnosari.bluetoothhid.ui.components.ConnectionBanner
 import com.fnosari.bluetoothhid.ui.components.connectionState
@@ -49,7 +49,7 @@ import com.fnosari.bluetoothhid.utils.rememberHIDService
 @Composable
 fun PresenterScreen(
     onBack: () -> Unit,
-    onService: (HIDForegroundService?) -> Unit,
+    onService: (HIDService?) -> Unit,
     onAction: (PresenterAction) -> Unit
 ) {
     val service = rememberHIDService()

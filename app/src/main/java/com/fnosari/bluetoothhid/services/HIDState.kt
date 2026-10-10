@@ -3,7 +3,7 @@ package com.fnosari.bluetoothhid.services
 import com.fnosari.bluetoothhid.connectivity.hid.HIDDevice
 import com.fnosari.bluetoothhid.model.Host
 
-/** Connection state exposed by [HIDForegroundService]. */
+/** Connection state exposed by [HIDService]. */
 sealed class HIDState {
     data object Starting : HIDState()
     data object Idle : HIDState()

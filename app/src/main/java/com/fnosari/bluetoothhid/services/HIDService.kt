@@ -1,8 +1,6 @@
 package com.fnosari.bluetoothhid.services
 
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.PendingIntent
 import android.app.Service
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -11,13 +9,10 @@ import android.content.IntentFilter
 import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ServiceInfo
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import com.fnosari.bluetoothhid.BluetoothHidApp
 import com.fnosari.bluetoothhid.R
-import com.fnosari.bluetoothhid.activities.main.MainActivity
 import com.fnosari.bluetoothhid.connectivity.hid.HIDDevice
 import com.fnosari.bluetoothhid.connectivity.hid.HIDReport
 import com.fnosari.bluetoothhid.connectivity.hid.HIDReportQueue
@@ -56,26 +51,23 @@ import java.util.Locale
  * Owns the HID connection so it survives activity changes. Activities start and bind it
  * with [com.fnosari.bluetoothhid.utils.rememberHIDService].
  *
- * It is a foreground service (with notification) only while a host is connecting/connected
- * or text is being typed, and stops when idle with no app screen visible ([ServicePolicy]).
+ * Plain (not foreground) service: it lives while a screen uses it or work is in progress, and
+ * stops when idle with no app screen visible ([ServicePolicy]). No notification.
  */
 @SuppressLint("MissingPermission") // service only starts after BLUETOOTH_CONNECT is granted
-class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
+class HIDService : Service(), HIDDevice.HIDDeviceCallBack {
 
     companion object {
-        private const val LOG_TAG = "HIDForegroundService"
-        private const val NOTIFICATION_ID = 1
-        const val ACTION_DISCONNECT = "com.fnosari.bluetoothhid.action.DISCONNECT"
-        const val ACTION_QUIT = "com.fnosari.bluetoothhid.action.QUIT"
+        private const val LOG_TAG = "HIDService"
 
         /** Call from a visible screen only (background service starts are not allowed). */
         fun start(context: Context) {
-            context.startService(Intent(context, HIDForegroundService::class.java))
+            context.startService(Intent(context, HIDService::class.java))
         }
     }
 
     inner class LocalBinder : Binder() {
-        val service: HIDForegroundService get() = this@HIDForegroundService
+        val service: HIDService get() = this@HIDService
     }
 
     private val binder = LocalBinder()
@@ -101,7 +93,6 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
     @Volatile
     private var mouseButtons = 0
     private var closing = false
-    private var isForeground = false
 
     private val appVisible = MutableStateFlow(false)
     private val visibilityObserver = LifecycleEventObserver { owner, _ ->
@@ -143,13 +134,7 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
         device.open()
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when (intent?.action) {
-            ACTION_DISCONNECT -> disconnect()
-            ACTION_QUIT -> quit()
-        }
-        return START_NOT_STICKY
-    }
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_NOT_STICKY
 
     override fun onBind(intent: Intent?): IBinder = binder
 
@@ -224,12 +209,6 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
     fun disconnect() {
         queue.cancelJobs()
         device.disconnect()
-    }
-
-    fun quit() {
-        disconnect()
-        stopForeground(STOP_FOREGROUND_REMOVE)
-        stopSelf()
     }
 
     fun setLayoutForCurrentHost(layoutId: String) {
@@ -333,63 +312,14 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
         if (isConnected) queue.submit(HIDReport.Mouse(buttons))
     }
 
-    // ---- Foreground state + notification ----
+    // ---- Lifetime ----
 
-    /** Foreground only while needed; stop when idle and no screen is visible. */
+    /** Stop when idle and no app screen is visible; otherwise keep running. */
     private fun applyPolicy(state: HIDState, typing: Boolean, visible: Boolean) {
         if (closing) return
-        if (ServicePolicy.needsForeground(state, typing)) {
-            val text = when (state) {
-                is HIDState.Connected -> getString(R.string.notification_connected, state.host.name)
-                is HIDState.Connecting -> getString(R.string.state_connecting, state.host.name)
-                else -> getString(R.string.state_idle)
-            }
-            try {
-                startForeground(
-                    NOTIFICATION_ID,
-                    buildNotification(text, connected = state is HIDState.Connected),
-                    ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
-                )
-                isForeground = true
-            } catch (e: Exception) {
-                // e.g. a host connecting while the app is in the background: keep running unpromoted
-                Log.d(LOG_TAG, "startForeground refused: ${e.message}")
-            }
-        } else if (isForeground) {
-            stopForeground(STOP_FOREGROUND_REMOVE)
-            isForeground = false
-        }
         if (ServicePolicy.shouldStop(state, typing, visible)) {
             Log.d(LOG_TAG, "idle and not visible: stopping")
             stopSelf()
         }
-    }
-
-    private fun buildNotification(text: String, connected: Boolean): Notification {
-        val open = PendingIntent.getActivity(
-            this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE
-        )
-        fun serviceAction(action: String, requestCode: Int) = PendingIntent.getService(
-            this, requestCode,
-            Intent(this, HIDForegroundService::class.java).setAction(action),
-            PendingIntent.FLAG_IMMUTABLE
-        )
-        val builder = Notification.Builder(this, BluetoothHidApp.NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.stat_sys_data_bluetooth)
-            .setContentTitle(getString(R.string.app_name))
-            .setContentText(text)
-            .setContentIntent(open)
-            .setOngoing(true)
-        if (connected) {
-            builder.addAction(
-                Notification.Action.Builder(null, getString(R.string.notification_disconnect),
-                    serviceAction(ACTION_DISCONNECT, 1)).build()
-            )
-        }
-        builder.addAction(
-            Notification.Action.Builder(null, getString(R.string.notification_quit),
-                serviceAction(ACTION_QUIT, 2)).build()
-        )
-        return builder.build()
     }
 }

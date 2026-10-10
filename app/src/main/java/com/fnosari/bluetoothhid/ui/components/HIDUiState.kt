@@ -7,20 +7,20 @@ import com.fnosari.bluetoothhid.R
 import com.fnosari.bluetoothhid.connectivity.hid.HIDDevice.HIDDeviceExitCode
 import com.fnosari.bluetoothhid.connectivity.hid.layouts.KeyboardLayout
 import com.fnosari.bluetoothhid.connectivity.hid.layouts.UsLayout
-import com.fnosari.bluetoothhid.services.HIDForegroundService
+import com.fnosari.bluetoothhid.services.HIDService
 import com.fnosari.bluetoothhid.services.HIDState
 import com.fnosari.bluetoothhid.services.TypingProgress
 
 @Composable
-fun HIDForegroundService?.connectionState(): HIDState =
+fun HIDService?.connectionState(): HIDState =
     this?.state?.collectAsStateWithLifecycle()?.value ?: HIDState.Starting
 
 @Composable
-fun HIDForegroundService?.currentLayout(): KeyboardLayout =
+fun HIDService?.currentLayout(): KeyboardLayout =
     this?.layout?.collectAsStateWithLifecycle()?.value ?: UsLayout
 
 @Composable
-fun HIDForegroundService?.typingProgress(): TypingProgress? =
+fun HIDService?.typingProgress(): TypingProgress? =
     this?.typing?.collectAsStateWithLifecycle()?.value
 
 @StringRes
