@@ -6,9 +6,9 @@ Turn an Android phone into a **Bluetooth keyboard, mouse and presentation remote
 
 Built because existing "scan a QR code and type it" apps were slow and sometimes typed the wrong characters. This app types long payloads (passwords, Wi-Fi keys, URLs, config strings) **exactly**, and fast.
 
-| Presenter | Locked presenter | Keyboard | Mouse |
-|---|---|---|---|
-| ![Presenter](docs/screenshots/presenter.png) | ![Locked](docs/screenshots/presenter-locked.png) | ![Keyboard](docs/screenshots/keyboard.png) | ![Mouse](docs/screenshots/mouse.png) |
+| Home | Presenter | Locked presenter | Keyboard | Mouse |
+|---|---|---|---|---|
+| ![Home](docs/screenshots/home.png) | ![Presenter](docs/screenshots/presenter.png) | ![Locked](docs/screenshots/presenter-locked.png) | ![Keyboard](docs/screenshots/keyboard.png) | ![Mouse](docs/screenshots/mouse.png) |
 
 ## Features
 
