@@ -4,6 +4,9 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Changed
+- New flat app icon (keyboard + mouse + Bluetooth badge) with a monochrome layer for themed icons; legacy bitmap launcher icons removed.
+
 ## [1.0.0] - 2026-10-10
 
 ### Added
