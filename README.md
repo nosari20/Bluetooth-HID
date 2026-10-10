@@ -1,3 +1,5 @@
+<img src="docs/icon-512.png" alt="" width="96" align="right">
+
 # Bluetooth HID
 
 Turn an Android phone into a **Bluetooth keyboard, mouse and presentation remote** for any computer — no app, driver or dongle on the computer side.
