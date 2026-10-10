@@ -15,8 +15,8 @@ import androidx.compose.ui.platform.LocalContext
 import com.fnosari.bluetoothhid.services.HIDForegroundService
 
 /**
- * Binds to [HIDForegroundService] for the lifetime of the composition.
- * Does not create the service (MainActivity starts it); returns null until bound.
+ * Starts (if needed) and binds [HIDForegroundService] for the lifetime of the composition;
+ * returns null until bound. Called from visible screens only, so starting is allowed.
  */
 @Composable
 fun rememberHIDService(): HIDForegroundService? {
@@ -32,6 +32,7 @@ fun rememberHIDService(): HIDForegroundService? {
                 service = null
             }
         }
+        HIDForegroundService.start(context)
         context.bindService(Intent(context, HIDForegroundService::class.java), connection, 0)
         onDispose {
             context.unbindService(connection)

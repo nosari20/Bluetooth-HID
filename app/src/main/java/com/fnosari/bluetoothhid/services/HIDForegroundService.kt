@@ -43,11 +43,21 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.ProcessLifecycleOwner
 import java.util.Locale
 
 /**
- * Owns the HID connection so it survives activity changes. Activities bind
+ * Owns the HID connection so it survives activity changes. Activities start and bind it
  * with [com.fnosari.bluetoothhid.utils.rememberHIDService].
+ *
+ * It is a foreground service (with notification) only while a host is connecting/connected
+ * or text is being typed, and stops when idle with no app screen visible ([ServicePolicy]).
  */
 @SuppressLint("MissingPermission") // service only starts after BLUETOOTH_CONNECT is granted
 class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
@@ -58,8 +68,9 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
         const val ACTION_DISCONNECT = "com.fnosari.bluetoothhid.action.DISCONNECT"
         const val ACTION_QUIT = "com.fnosari.bluetoothhid.action.QUIT"
 
+        /** Call from a visible screen only (background service starts are not allowed). */
         fun start(context: Context) {
-            context.startForegroundService(Intent(context, HIDForegroundService::class.java))
+            context.startService(Intent(context, HIDForegroundService::class.java))
         }
     }
 
@@ -90,6 +101,12 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
     @Volatile
     private var mouseButtons = 0
     private var closing = false
+    private var isForeground = false
+
+    private val appVisible = MutableStateFlow(false)
+    private val visibilityObserver = LifecycleEventObserver { owner, _ ->
+        appVisible.value = owner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+    }
 
     /** Follows Bluetooth on/off at runtime. */
     private val adapterReceiver = object : BroadcastReceiver() {
@@ -100,7 +117,6 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
                 BluetoothAdapter.STATE_OFF -> {
                     queue.failJobs()
                     _state.value = HIDState.Unavailable(HIDDevice.HIDDeviceExitCode.ERROR_BLUETOOTH_NOT_ENABLED)
-                    updateNotification(getString(R.string.notification_idle), connected = false)
                 }
             }
         }
@@ -113,11 +129,16 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
         device = HIDDevice(this, this)
         queue = HIDReportQueue(device::sendReport, currentSpeed().delayMs)
         queue.start()
-        startForeground(
-            NOTIFICATION_ID,
-            buildNotification(getString(R.string.notification_idle), connected = false),
-            ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
-        )
+        ProcessLifecycleOwner.get().lifecycle.addObserver(visibilityObserver)
+        scope.launch {
+            combine(
+                state,
+                typing.map { it != null }.distinctUntilChanged(),
+                appVisible
+            ) { s, t, v -> Triple(s, t, v) }
+                .distinctUntilChanged()
+                .collect { (s, t, v) -> applyPolicy(s, t, v) }
+        }
         registerReceiver(adapterReceiver, IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED))
         device.open()
     }
@@ -134,6 +155,7 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
 
     override fun onDestroy() {
         closing = true
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(visibilityObserver)
         unregisterReceiver(adapterReceiver)
         _state.value = HIDState.Idle
         _typing.value = null
@@ -168,14 +190,12 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
                 _state.value = HIDState.Connected(host)
                 preferences.write(Preferences.LAST_HOST, host.address)
                 _layout.value = layoutFor(host.address)
-                updateNotification(getString(R.string.notification_connected, host.name), connected = true)
             }
             BluetoothProfile.STATE_DISCONNECTED -> {
                 // host lost while typing → Failed(index) so the user can resume
                 queue.failJobs()
                 if (_state.value !is HIDState.Unavailable) _state.value = HIDState.Idle
                 _layout.value = Layouts.byId(defaultLayoutId())
-                updateNotification(getString(R.string.notification_idle), connected = false)
             }
         }
     }
@@ -313,11 +333,36 @@ class HIDForegroundService : Service(), HIDDevice.HIDDeviceCallBack {
         if (isConnected) queue.submit(HIDReport.Mouse(buttons))
     }
 
-    // ---- Notification ----
+    // ---- Foreground state + notification ----
 
-    private fun updateNotification(text: String, connected: Boolean) {
-        getSystemService(android.app.NotificationManager::class.java)
-            .notify(NOTIFICATION_ID, buildNotification(text, connected))
+    /** Foreground only while needed; stop when idle and no screen is visible. */
+    private fun applyPolicy(state: HIDState, typing: Boolean, visible: Boolean) {
+        if (closing) return
+        if (ServicePolicy.needsForeground(state, typing)) {
+            val text = when (state) {
+                is HIDState.Connected -> getString(R.string.notification_connected, state.host.name)
+                is HIDState.Connecting -> getString(R.string.state_connecting, state.host.name)
+                else -> getString(R.string.state_idle)
+            }
+            try {
+                startForeground(
+                    NOTIFICATION_ID,
+                    buildNotification(text, connected = state is HIDState.Connected),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
+                )
+                isForeground = true
+            } catch (e: Exception) {
+                // e.g. a host connecting while the app is in the background: keep running unpromoted
+                Log.d(LOG_TAG, "startForeground refused: ${e.message}")
+            }
+        } else if (isForeground) {
+            stopForeground(STOP_FOREGROUND_REMOVE)
+            isForeground = false
+        }
+        if (ServicePolicy.shouldStop(state, typing, visible)) {
+            Log.d(LOG_TAG, "idle and not visible: stopping")
+            stopSelf()
+        }
     }
 
     private fun buildNotification(text: String, connected: Boolean): Notification {
