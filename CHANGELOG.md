@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-10
+
+### Changed
+- The connection service is a foreground service (with notification) only while a computer is connecting/connected or text is being typed; it stops when idle and the app is closed (Google Play foreground-service policy).
+- Privacy policy hosted at https://nosari20.github.io/apps/bluetooth-hid/privacy/, with a contact section.
+
 ### Changed
 - New flat app icon (keyboard + mouse + Bluetooth badge) with a monochrome layer for themed icons; legacy bitmap launcher icons removed.
 
@@ -20,5 +26,6 @@ All notable changes to this project are documented here. The format follows [Kee
 - Foreground service keeping the connection across screens; auto-reconnect to the last host; follows Bluetooth on/off.
 - English and French UI; per-app language setting.
 
-[Unreleased]: ../../compare/v1.0.0...HEAD
+[Unreleased]: ../../compare/v1.0.1...HEAD
+[1.0.1]: ../../compare/v1.0.0...v1.0.1
 [1.0.0]: ../../releases/tag/v1.0.0

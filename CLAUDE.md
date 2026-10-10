@@ -43,6 +43,7 @@ Windows: if a build fails with `AccessDeniedException` / `Unable to delete direc
 
 ## Gotchas
 
+- `HIDForegroundService` is foreground only while connecting/connected/typing and stops when idle with no screen visible (`ServicePolicy`, unit-tested). Screens start it via `rememberHIDService()`; never call `startForeground` outside `applyPolicy`.
 - System "touch feedback" off silences `performHapticFeedback`; Presenter uses `SlideVibrator` (media usage) instead.
 - A host paired while another HID app was active keeps that app's descriptor → reports ignored. Fix: unpair on both sides, pair again.
 - `DataStorePreferencesProvider` reads with `runBlocking` (ClassLock pattern) — fine for small reads, avoid in hot paths.

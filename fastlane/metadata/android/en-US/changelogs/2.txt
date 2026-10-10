@@ -1,0 +1,2 @@
+• Connection notification only shows while a computer is connected or text is being typed
+• Privacy policy now hosted on nosari20.github.io

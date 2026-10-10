@@ -7,7 +7,6 @@
     <string name="go_back">Retour</string>
 
     <string name="notification_channel_name">Connexion</string>
-    <string name="notification_idle">En attente d’un hôte</string>
     <string name="notification_connected">Connecté à %1$s</string>
     <string name="notification_disconnect">Déconnecter</string>
     <string name="notification_quit">Quitter</string>
