@@ -2346,7 +2346,7 @@ enum class TypingSpeed(val delayMs: Long) {
 
 - [ ] **Step 4: Implement preferences**
 
-`persistance/preferences/PreferencesProvider.kt` — copy verbatim from ClassLock (`C:/Users/ACH02/Documents/Projects/Android/ClassLock/app/src/main/java/com/fnosari/classlock/persistance/preferences/PreferencesProvider.kt`), changing only the package line to `package com.fnosari.bluetoothhid.persistance.preferences`.
+`persistance/preferences/PreferencesProvider.kt` — copy verbatim from ClassLock (`ClassLock/app/src/main/java/com/fnosari/classlock/persistance/preferences/PreferencesProvider.kt`), changing only the package line to `package com.fnosari.bluetoothhid.persistance.preferences`.
 
 `persistance/preferences/DataStorePreferencesProvider.kt` — copy verbatim from ClassLock's `DataStorePreferencesProvider.kt`, changing only the package line. (It reads with `runBlocking { dataStore.data.map { … }.first() }` and writes with `scope.launch { dataStore.edit { … } }`.)
 
