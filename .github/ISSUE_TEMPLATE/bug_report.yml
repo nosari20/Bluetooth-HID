@@ -1,0 +1,47 @@
+name: Bug report
+description: Something types wrong, disconnects, or crashes
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, what happened instead?
+    validations:
+      required: true
+  - type: input
+    id: phone
+    attributes:
+      label: Phone model and Android version
+      placeholder: Pixel 8, Android 16
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Computer OS and its keyboard layout
+      placeholder: Windows 11, French AZERTY
+    validations:
+      required: true
+  - type: dropdown
+    id: layout
+    attributes:
+      label: Layout selected in the app
+      options:
+        - US (QWERTY)
+        - French AZERTY (Windows)
+        - French AZERTY (Linux)
+        - French AZERTY (Mac)
+    validations:
+      required: true
+  - type: textarea
+    id: typed
+    attributes:
+      label: Text sent vs. text received (if typing is wrong)
+      description: Do not paste real passwords.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (optional)
+      description: "`adb logcat -s HIDDevice HIDForegroundService`"
+      render: text
